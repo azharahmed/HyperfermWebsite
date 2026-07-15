@@ -1,26 +1,121 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN TOKENS — HyperFerment
+   Tailwind v4: @theme defines CSS variables + utility classes
+   ═══════════════════════════════════════════════════════════════ */
+
+@theme {
+
+  /* ── Colours: Surface ───────────────────────────────────────── */
+  --color-surface:       #FAFBFF;
+  --color-surface-alt:   #F3F5FC;
+
+  /* ── Colours: Ink ───────────────────────────────────────────── */
+  --color-ink:           #0F1123;
+  --color-ink-muted:     #4B5280;
+  --color-ink-subtle:    #8B90B8;
+
+  /* ── Colours: Accent ────────────────────────────────────────── */
+  --color-accent-blue:   #3B82F6;
+  --color-accent-violet: #7C3AED;
+  --color-accent-cyan:   #06B6D4;
+  --color-accent-pink:   #EC4899;
+
+  /* ── Colours: Border ────────────────────────────────────────── */
+  --color-border:        #E4E7F5;
+  --color-border-subtle: #EEF0FA;
+
+  /* ── Typography: Font sizes ─────────────────────────────────── */
+  --text-hero:           clamp(2.5rem, 5vw, 4.5rem);
+  --text-section:        clamp(1.75rem, 3vw, 2.75rem);
+  --text-card-h:         1.125rem;
+  --text-eyebrow:        0.6875rem;
+
+  /* ── Radius ─────────────────────────────────────────────────── */
+  --radius-card:   16px;
+  --radius-button: 8px;
+  --radius-pill:   9999px;
+
+  /* ── Shadows ────────────────────────────────────────────────── */
+  --shadow-card:
+    0 2px 24px rgba(99, 102, 241, 0.07),
+    0 1px 4px  rgba(0, 0, 0, 0.04);
+  --shadow-card-hover:
+    0 8px 40px  rgba(99, 102, 241, 0.13),
+    0 2px 8px   rgba(0, 0, 0, 0.06);
+  --shadow-header:
+    0 1px 0 #E4E7F5,
+    0 4px 24px rgba(0, 0, 0, 0.04);
+  --shadow-button-primary:
+    0 4px 16px rgba(99, 102, 241, 0.30);
 }
 
+/* Font families — @theme inline so next/font CSS variables resolve correctly */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display), 'Bebas Neue', sans-serif;
+  --font-serif:   var(--font-serif),   'Prata', Georgia, serif;
+  --font-sans:    var(--font-sans),    'Inter', system-ui, sans-serif;
+  --font-ui:      var(--font-ui),      'Montserrat', system-ui, sans-serif;
+  --font-mono:    var(--font-mono),    'Space Mono', 'Courier New', monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ═══════════════════════════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════════════════════════ */
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Skip-to-content link ──────────────────────────────────────── */
+
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: 1rem;
+  z-index: 200;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-accent-blue);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+}
+
+/* ── Global focus ring ─────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Text selection ────────────────────────────────────────────── */
+
+::selection {
+  background-color: rgba(124, 58, 237, 0.12);
+  color: var(--color-ink);
 }

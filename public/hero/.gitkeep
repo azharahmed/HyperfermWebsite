@@ -1,0 +1,9 @@
+# Place the following hero assets in this directory:
+#
+#   biomanufacturing-hero.webp  — approved static hero image (required for Phase 2)
+#   biomanufacturing-hero.mp4   — optional video (loaded on desktop, not yet required)
+#
+# The image should have:
+#   - Clean, text-safe space on the left
+#   - Transparent fermentation infrastructure on the right
+#   - Pale white / lavender background
