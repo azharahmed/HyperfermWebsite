@@ -22,10 +22,11 @@ const industries = [
     title: "Food Ingredients",
     description: "Consistent production of flavors, cultures, enzymes, and additives.",
     pill: "INGREDIENT SCALE-UP",
-    image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=640&q=80&auto=format&fit=crop",
-    alt: "Fermentation liquid and ingredient processing close-up",
+    image: "/B.png",
+    alt: "Broccoli representing food ingredients",
     layout: "top", // image as top strip
     colSpan: "lg:col-span-1 md:col-span-1",
+    objectFit: "contain",
   },
   {
     num: "03",
@@ -120,7 +121,7 @@ export function IndustriesSection() {
                           </span>
                         </div>
                         {/* Title & Description */}
-                        <h3 className="font-display text-xl text-ink font-semibold leading-snug mb-3">
+                        <h3 className="font-sans text-[1.25rem] text-ink font-bold tracking-tight leading-snug mb-3">
                           {ind.title}
                         </h3>
                         <p className="font-ui font-light text-sm text-ink-muted leading-relaxed pb-12 md:pb-4">
@@ -131,13 +132,17 @@ export function IndustriesSection() {
 
                     {/* Right side: Cropped biotech image */}
                     <div className="w-full md:w-[42%] flex items-center">
-                      <div className="relative w-full h-[180px] md:h-full min-h-[160px] md:min-h-[180px] overflow-hidden rounded-lg border border-black/[0.04]">
+                      <div className="relative w-full h-[180px] md:h-full min-h-[160px] md:min-h-[180px] overflow-hidden rounded-lg border border-black/[0.04] bg-white">
                         <Image
                           src={ind.image}
                           alt={ind.alt}
                           fill
                           sizes="(max-width: 768px) 100vw, 50vw"
-                          className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                          className={`${
+                            'objectFit' in ind && ind.objectFit === 'contain' 
+                              ? 'object-contain scale-[1.35] group-hover:scale-[1.42]' 
+                              : 'object-cover group-hover:scale-[1.02]'
+                          } transition-transform duration-500 ease-out`}
                           unoptimized
                         />
                       </div>
@@ -158,19 +163,23 @@ export function IndustriesSection() {
                       </div>
 
                       {/* Small Cropped Biotech Image */}
-                      <div className="relative w-full h-[150px] overflow-hidden rounded-lg border border-black/[0.04] mb-5">
+                      <div className="relative w-full h-[150px] overflow-hidden rounded-lg border border-black/[0.04] mb-5 bg-white">
                         <Image
                           src={ind.image}
                           alt={ind.alt}
                           fill
                           sizes="(max-width: 768px) 100vw, 33vw"
-                          className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                          className={`${
+                            'objectFit' in ind && ind.objectFit === 'contain' 
+                              ? 'object-contain scale-[1.35] group-hover:scale-[1.42]' 
+                              : 'object-cover group-hover:scale-[1.02]'
+                          } transition-transform duration-500 ease-out`}
                           unoptimized
                         />
                       </div>
 
                       {/* Title & Description */}
-                      <h3 className="font-display text-xl text-ink font-semibold leading-snug mb-3">
+                      <h3 className="font-sans text-[1.25rem] text-ink font-bold tracking-tight leading-snug mb-3">
                         {ind.title}
                       </h3>
                       <p className="font-ui font-light text-sm text-ink-muted leading-relaxed pb-12">

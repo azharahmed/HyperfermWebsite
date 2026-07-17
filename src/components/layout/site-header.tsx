@@ -13,20 +13,25 @@ import { cn } from '@/lib/cn';
 
 function HyperFermentLogo() {
   return (
-    <Link
-      href="/"
-      className="flex items-center flex-shrink-0"
-      aria-label="HyperFerment — return to homepage"
-    >
-      <Image
-        src="/logo.svg"
-        alt="HyperFerment"
-        width={160}
-        height={40}
-        className="h-9 w-auto object-contain"
-        priority
-      />
-    </Link>
+    <div className="flex flex-col items-start leading-none justify-center">
+      <Link
+        href="/"
+        className="flex items-center flex-shrink-0"
+        aria-label="HyperFerment — return to homepage"
+      >
+        <Image
+          src="/logo.svg"
+          alt="HyperFerment"
+          width={160}
+          height={40}
+          className="h-9 w-auto object-contain"
+          priority
+        />
+      </Link>
+      <span className="text-[8px] sm:text-[9px] text-ink-muted font-mono tracking-[0.2em] mt-1.5 uppercase block">
+        Engineering Biointelligence
+      </span>
+    </div>
   );
 }
 
