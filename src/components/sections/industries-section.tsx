@@ -22,11 +22,10 @@ const industries = [
     title: "Food Ingredients",
     description: "Consistent production of flavors, cultures, enzymes, and additives.",
     pill: "INGREDIENT SCALE-UP",
-    image: "/B.png",
+    image: "/b.png",
     alt: "Broccoli representing food ingredients",
     layout: "top", // image as top strip
     colSpan: "lg:col-span-1 md:col-span-1",
-    objectFit: "contain",
   },
   {
     num: "03",
@@ -163,20 +162,30 @@ export function IndustriesSection() {
                       </div>
 
                       {/* Small Cropped Biotech Image */}
-                      <div className="relative w-full h-[150px] overflow-hidden rounded-lg border border-black/[0.04] mb-5 bg-white">
-                        <Image
-                          src={ind.image}
-                          alt={ind.alt}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          className={`${
-                            'objectFit' in ind && ind.objectFit === 'contain' 
-                              ? 'object-contain scale-[1.35] group-hover:scale-[1.42]' 
-                              : 'object-cover group-hover:scale-[1.02]'
-                          } transition-transform duration-500 ease-out`}
-                          unoptimized
-                        />
-                      </div>
+                      {ind.num === "02" ? (
+                        <div className="relative h-[170px] w-full overflow-hidden rounded-xl mb-5">
+                          <img
+                            src="/b.png"
+                            alt="Broccoli food ingredients"
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div className="relative w-full h-[150px] overflow-hidden rounded-lg border border-black/[0.04] mb-5 bg-white">
+                          <Image
+                            src={ind.image}
+                            alt={ind.alt}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                            className={`${
+                              'objectFit' in ind && ind.objectFit === 'contain' 
+                                ? 'object-contain scale-[1.35] group-hover:scale-[1.42]' 
+                                : 'object-cover group-hover:scale-[1.02]'
+                            } transition-transform duration-500 ease-out`}
+                            unoptimized
+                          />
+                        </div>
+                      )}
 
                       {/* Title & Description */}
                       <h3 className="font-sans text-[1.25rem] text-ink font-bold tracking-tight leading-snug mb-3">
