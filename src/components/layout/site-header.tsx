@@ -82,7 +82,7 @@ export function SiteHeader() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center">
-            <ButtonLink href="#contact" variant="primary" size="md">
+            <ButtonLink href="mailto:hello@hyperferm.ai" variant="primary" size="md">
               Partner With Us
             </ButtonLink>
           </div>

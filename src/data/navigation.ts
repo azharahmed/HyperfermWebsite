@@ -10,9 +10,9 @@ export interface FooterColumn {
 
 export const navLinks: NavLink[] = [
   { label: 'What We Do', href: '#what-we-do' },
-  { label: 'Technology', href: '#technology' },
-  { label: 'Industries', href: '#industries' },
   { label: 'Why Us', href: '#capabilities' },
+  { label: 'Industries', href: '#industries' },
+  { label: 'Lifecycle', href: '#capabilities-lifecycle' },
 ];
 
 /** Footer link columns */
@@ -22,24 +22,24 @@ export const footerColumns: FooterColumn[] = [
     links: [
       { label: 'About', href: '#about' },
       { label: 'Careers', href: '#careers' },
-      { label: 'Contact', href: '#contact' },
+      { label: 'Contact', href: 'mailto:hello@hyperferm.ai' },
     ],
   },
   {
     heading: 'Technology',
     links: [
-      { label: 'AI Process Intelligence', href: '#technology' },
-      { label: 'Process Analytics', href: '#technology' },
-      { label: 'Advanced Process Control', href: '#technology' },
-      { label: 'Continuous Fermentation', href: '#fermentation' },
+      { label: 'AI Process Intelligence', href: '#what-we-do' },
+      { label: 'Process Analytics', href: '#what-we-do' },
+      { label: 'Advanced Process Control', href: '#what-we-do' },
+      { label: 'Continuous Fermentation', href: '#what-we-do' },
     ],
   },
   {
     heading: 'Solutions',
     links: [
-      { label: 'Facility Transformation', href: '#solutions' },
-      { label: 'Precision Fermentation', href: '#solutions' },
-      { label: 'Process Optimization', href: '#solutions' },
+      { label: 'Facility Transformation', href: '#what-we-do' },
+      { label: 'Precision Fermentation', href: '#what-we-do' },
+      { label: 'Process Optimization', href: '#what-we-do' },
     ],
   },
   {

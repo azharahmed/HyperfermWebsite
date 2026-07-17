@@ -41,7 +41,7 @@ export function SiteFooter() {
 
           {/* Nav Links */}
           <nav aria-label="Footer navigation" className="flex flex-wrap gap-x-8 gap-y-2">
-            {[...navLinks, { label: 'Contact', href: '#contact' }].map((link) => (
+            {[...navLinks, { label: 'Contact', href: 'mailto:hello@hyperferm.ai' }].map((link) => (
               <Link
                 key={link.href}
                 href={link.href}

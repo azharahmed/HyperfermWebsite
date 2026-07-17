@@ -173,7 +173,7 @@ export function MobileNavigation({
             {/* CTA */}
             <div className="px-6 py-8 border-t border-border-subtle">
               <ButtonLink
-                href="#contact"
+                href="mailto:hello@hyperferm.ai"
                 variant="primary"
                 size="lg"
                 className="w-full"
