@@ -1,58 +1,87 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HeroVideoRotator } from "@/components/hero/hero-video-rotator";
 import { ButtonLink } from "@/components/ui/button-link";
 
 /* -- Shared animation variants --------------------------------------------- */
 
-
-/** Text lines: -40px left to 0, fade in — used by both slides */
+/** Text lines: -40px left to 0, fade in — used by all slides */
 const lineVariants = {
   initial: { x: -40, opacity: 0 },
   animate: { x: 0,   opacity: 1 },
-  exit:    { x: -24, opacity: 0 },
 };
 
 /* -- Slide data ------------------------------------------------------------- */
 
 const slide1Lines = [
-  { text: "The Future of",      delay: 0.18, gradient: false },
-  { text: "Intelligent",        delay: 0.36, gradient: false },
-  { text: "Biomanufacturing",   delay: 0.54, gradient: false },
-  { text: "Starts Here.",       delay: 0.72, gradient: true  },
+  { text: "Transforming legacy bioprocess",                   delay: 0.18 },
+  { text: "facilities worldwide into AI-powered,",             delay: 0.36 },
+  { text: "continuous precision fermentation systems",         delay: 0.54 },
+  { text: "for the future of biomanufacturing.",               delay: 0.72 },
 ] as const;
 
-/** Four lines that mirror the line count and rhythm of slide 1. */
 const slide2Lines = [
-  { text: "Transforming Legacy",                   delay: 0.18 },
-  { text: "Bioprocess Facilities Worldwide",        delay: 0.36 },
-  { text: "Into Intelligent, Continuous-Mode",      delay: 0.54 },
-  { text: "Hyper-Fermentation Infrastructure.",     delay: 0.72 },
+  { text: "Powered by our proprietary",                        delay: 0.18 },
+  { text: "AI platform, we deliver",                           delay: 0.36 },
+  { text: "real-time process analytics, advanced",             delay: 0.54 },
+  { text: "process control, and predictive optimisation.",     delay: 0.72 },
 ] as const;
 
 const slide3Lines = [
-  { text: "Our Proprietary AI", delay: 0.18 },
-] as const;
-
-const slide4Lines = [
-  { text: "Precision Fermentation,",     delay: 0.18 },
-  { text: "Intelligently Scaled",         delay: 0.36 },
-  { text: "From Lab to",                  delay: 0.54 },
-  { text: "Commercial Production.",       delay: 0.72 },
+  { text: "This maximises the efficiency,",                    delay: 0.18 },
+  { text: "scalability, and performance",                      delay: 0.36 },
+  { text: "of precision fermentation-derived",                 delay: 0.54 },
+  { text: "products.",                                         delay: 0.72 },
 ] as const;
 
 /* -- Component -------------------------------------------------------------- */
 
 export function HeroSection() {
-  const [activeVideo, setActiveVideo] = useState(0);
+  const [phase, setPhase] = useState(0);
+
+  // Controlled timing loop state machine:
+  // Phase 0: show text 0, video 0 (5000ms)
+  // Phase 1: text 0 exits (400ms)
+  // Phase 2: video cuts to 1 (50ms)
+  // Phase 3: show text 1, video 1 (5000ms)
+  // Phase 4: text 1 exits (400ms)
+  // Phase 5: video cuts to 2 (50ms)
+  // Phase 6: show text 2, video 2 (5000ms)
+  // Phase 7: text 2 exits (400ms)
+  // Phase 8: video cuts to 0 (50ms)
+  useEffect(() => {
+    let delay = 5000;
+    if (phase === 1 || phase === 4 || phase === 7) {
+      delay = 400; // Allow text to exit fully
+    } else if (phase === 2 || phase === 5 || phase === 8) {
+      delay = 50;  // Instant video cut
+    }
+
+    const timer = setTimeout(() => {
+      setPhase((prev) => (prev + 1) % 9);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [phase]);
+
+  // Derived state mapping
+  const activeVideo = (phase === 0 || phase === 1) ? 0
+                    : (phase === 2 || phase === 3 || phase === 4) ? 1
+                    : (phase === 5 || phase === 6 || phase === 7) ? 2
+                    : 0;
+
+  const activeText = phase === 0 ? 0
+                   : phase === 3 ? 1
+                   : phase === 6 ? 2
+                   : -1;
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-[#f7f5ff]">
 
-      {/* Background video rotator */}
-      <HeroVideoRotator onActiveIndexChange={setActiveVideo} />
+      {/* Background video rotator (Controlled, Sudden Cut) */}
+      <HeroVideoRotator activeIndex={activeVideo} />
 
       {/* Futuristic Background Glow Blobs */}
       <div className="absolute top-[15%] left-[20%] w-[350px] h-[350px] bg-accent-blue/10 rounded-full blur-[100px] pointer-events-none" />
@@ -70,40 +99,34 @@ export function HeroSection() {
 
           <AnimatePresence mode="wait">
 
-            {/* ---- Slide 1: main hero heading ---- */}
-            {activeVideo === 0 && (
+            {/* ---- Slide 1 ---- */}
+            {activeText === 0 && (
               <motion.div
                 key="slide-1"
-                initial="initial"
-                animate="animate"
-                exit="exit"
+                exit={{ opacity: 0, y: -20, transition: { duration: 0.3, ease: "easeIn" } }}
                 className="space-y-6"
               >
-                {/* H1 - each line enters individually, left to right */}
-                <h1 className="font-display max-w-[760px] text-[clamp(2.5rem,5vw,4.75rem)] leading-[1.08] tracking-[0.05em] text-[#17133F]">
-                  {slide1Lines.map(({ text, delay, gradient }) => (
+                <h2 className="font-ui font-light max-w-[760px] text-[clamp(1.6rem,2.8vw,2.75rem)] leading-[1.15] tracking-[-0.01em] text-[#17133F]">
+                  {slide1Lines.map(({ text, delay }) => (
                     <motion.span
                       key={text}
-                      className={[
-                        "block",
-                        gradient
-                          ? "bg-gradient-to-r from-[#7C3AED] to-[#C026D3] bg-clip-text text-transparent"
-                          : "",
-                      ]
-                        .filter(Boolean)
-                        .join(" ")}
+                      className="block font-medium"
                       variants={lineVariants}
+                      initial="initial"
+                      animate="animate"
                       transition={{ duration: 0.6, delay, ease: "easeOut" }}
                     >
                       {text}
                     </motion.span>
                   ))}
-                </h1>
+                </h2>
 
                 {/* Action Buttons */}
                 <motion.div
                   className="flex flex-wrap gap-4 pt-4"
                   variants={lineVariants}
+                  initial="initial"
+                  animate="animate"
                   transition={{ duration: 0.6, delay: 0.9, ease: "easeOut" }}
                 >
                   <ButtonLink href="#what-we-do" variant="primary" size="md">
@@ -116,22 +139,21 @@ export function HeroSection() {
               </motion.div>
             )}
 
-            {/* ---- Slide 2: mission statement, same left-to-right line animation ---- */}
-            {activeVideo === 1 && (
+            {/* ---- Slide 2 ---- */}
+            {activeText === 1 && (
               <motion.div
                 key="slide-2"
-                initial="initial"
-                animate="animate"
-                exit="exit"
+                exit={{ opacity: 0, y: -20, transition: { duration: 0.3, ease: "easeIn" } }}
                 className="space-y-6"
               >
-                {/* Lines - identical animation to slide 1, lighter font */}
                 <h2 className="font-ui font-light max-w-[760px] text-[clamp(1.6rem,2.8vw,2.75rem)] leading-[1.15] tracking-[-0.01em] text-[#17133F]">
                   {slide2Lines.map(({ text, delay }) => (
                     <motion.span
                       key={text}
-                      className="block"
+                      className="block font-medium"
                       variants={lineVariants}
+                      initial="initial"
+                      animate="animate"
                       transition={{ duration: 0.6, delay, ease: "easeOut" }}
                     >
                       {text}
@@ -143,6 +165,8 @@ export function HeroSection() {
                 <motion.div
                   className="flex flex-wrap gap-4 pt-4"
                   variants={lineVariants}
+                  initial="initial"
+                  animate="animate"
                   transition={{ duration: 0.6, delay: 0.9, ease: "easeOut" }}
                 >
                   <ButtonLink href="#what-we-do" variant="primary" size="md">
@@ -155,22 +179,21 @@ export function HeroSection() {
               </motion.div>
             )}
 
-            {/* ---- Slide 3: proprietary AI, same style as slide 2 ---- */}
-            {activeVideo === 2 && (
+            {/* ---- Slide 3 ---- */}
+            {activeText === 2 && (
               <motion.div
                 key="slide-3"
-                initial="initial"
-                animate="animate"
-                exit="exit"
+                exit={{ opacity: 0, y: -20, transition: { duration: 0.3, ease: "easeIn" } }}
                 className="space-y-6"
               >
-                {/* Single line - same font and animation as slide 2 */}
                 <h2 className="font-ui font-light max-w-[760px] text-[clamp(1.6rem,2.8vw,2.75rem)] leading-[1.15] tracking-[-0.01em] text-[#17133F]">
                   {slide3Lines.map(({ text, delay }) => (
                     <motion.span
                       key={text}
-                      className="block"
+                      className="block font-medium"
                       variants={lineVariants}
+                      initial="initial"
+                      animate="animate"
                       transition={{ duration: 0.6, delay, ease: "easeOut" }}
                     >
                       {text}
@@ -182,45 +205,8 @@ export function HeroSection() {
                 <motion.div
                   className="flex flex-wrap gap-4 pt-4"
                   variants={lineVariants}
-                  transition={{ duration: 0.6, delay: 0.9, ease: "easeOut" }}
-                >
-                  <ButtonLink href="#technology" variant="primary" size="md">
-                    EXPLORE OUR PLATFORM
-                  </ButtonLink>
-                  <ButtonLink href="#contact" variant="secondary" size="md">
-                    PARTNER WITH US
-                  </ButtonLink>
-                </motion.div>
-              </motion.div>
-            )}
-
-            {/* ---- Slide 4: precision fermentation ---- */}
-            {activeVideo === 3 && (
-              <motion.div
-                key="slide-4"
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                className="space-y-6"
-              >
-                {/* Lines */}
-                <h2 className="font-ui font-light max-w-[760px] text-[clamp(1.6rem,2.8vw,2.75rem)] leading-[1.15] tracking-[-0.01em] text-[#17133F]">
-                  {slide4Lines.map(({ text, delay }) => (
-                    <motion.span
-                      key={text}
-                      className="block"
-                      variants={lineVariants}
-                      transition={{ duration: 0.6, delay, ease: "easeOut" }}
-                    >
-                      {text}
-                    </motion.span>
-                  ))}
-                </h2>
-
-                {/* Action Buttons */}
-                <motion.div
-                  className="flex flex-wrap gap-4 pt-4"
-                  variants={lineVariants}
+                  initial="initial"
+                  animate="animate"
                   transition={{ duration: 0.6, delay: 0.9, ease: "easeOut" }}
                 >
                   <ButtonLink href="#what-we-do" variant="primary" size="md">

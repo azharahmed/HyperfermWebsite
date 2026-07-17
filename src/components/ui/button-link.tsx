@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 /* ── Types ──────────────────────────────────────────────────────────────── */
 
 type Variant = 'primary' | 'secondary' | 'ghost';
-type Size    = 'sm' | 'md' | 'lg';
+type Size = 'sm' | 'md' | 'lg';
 
 export interface ButtonLinkProps {
   /** When provided, renders a Next.js <Link>; otherwise renders a <button>. */

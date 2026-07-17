@@ -19,7 +19,7 @@ function HyperFermentLogo() {
       aria-label="HyperFerment — return to homepage"
     >
       <Image
-        src="/logo.png"
+        src="/logo.svg"
         alt="HyperFerment"
         width={160}
         height={40}
